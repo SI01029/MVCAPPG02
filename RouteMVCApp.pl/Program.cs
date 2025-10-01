@@ -29,7 +29,7 @@ namespace RouteMVCApp.pl
 
             app.UseRouting();
 
-            app.UseAuthorization();
+        
 
             //verp: BaseUrl/Controller/action
             app.MapControllerRoute(
