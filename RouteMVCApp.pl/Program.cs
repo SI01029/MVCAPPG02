@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Route.MVCApp.DAL.Persistance.Data.Contixts;
+
 namespace RouteMVCApp.pl
 {
     public class Program
@@ -11,7 +14,24 @@ namespace RouteMVCApp.pl
             
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            //builder.Services.AddScoped<ApplicationDbContext>();
+            //builder.Services.AddScoped<DbContextOptions<ApplicationDbContext>>((ServiceProvider)=>
+            //{
+            //    var optionsBuildr = new DbContextOptionsBuilder<ApplicationDbContext>();
+            //    optionsBuildr.UseSqlServer("Server =.;Database =MVCAPPG02; Trusted_Connection=true;TrustSeverCertificate =true");
+            //    var options = optionsBuildr.Options;
+            //    return options;
+            //});
+            builder.Services.AddDbContext<ApplicationDbContext>(
+                //contextLifetime: ServiceLifetime.Scoped,
+                //optionsLifetime: ServiceLifetime.Scoped  //Default Value
+                optionsAction: (optionBuilder) =>
+                {
+                     //optionBuilder.UseSqlServer(builder.Configuration.GetSection("ConnectionString")["DefaultConnection"]);
+                    optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
+                }
+                );
+                
             #endregion
 
             var app = builder.Build();

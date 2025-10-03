@@ -20,4 +20,4 @@ namespace Route.MVCApp.DAL.Persistance.Data.Configurations.Departments
         }
     }
     }
-}
+
