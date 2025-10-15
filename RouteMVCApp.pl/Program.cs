@@ -27,8 +27,8 @@ namespace RouteMVCApp.pl
                 //optionsLifetime: ServiceLifetime.Scoped  //Default Value
                 optionsAction: (optionBuilder) =>
                 {
-                     //optionBuilder.UseSqlServer(builder.Configuration.GetSection("ConnectionString")["DefaultConnection"]);
-                    optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
+                   // optionBuilder.UseSqlServer(builder.Configuration.GetSection("ConnectionString")["DefaultConnection"]);
+                    optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
                 }
                 );
                 
