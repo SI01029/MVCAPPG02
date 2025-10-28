@@ -11,6 +11,7 @@ namespace Route.MVCApp.DAL.Persistance.Repositories.Departments
     {
         Department? Get(int id);
        IEnumerable<Department> GetAll(bool withAsNoTracking = true);
+        IQueryable<Department> GetAllAsIQuerable();
        int Add(Department entity);
         int Update(Department entity);
         int Delete(Department entity);

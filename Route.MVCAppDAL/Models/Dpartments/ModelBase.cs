@@ -13,7 +13,7 @@ namespace Route.MVCApp.DAL.Models.Dpartments
         public int LastModifiedBy { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime CreatedOn { get; set; }
-        public DateTime LastmodifiedOn { get; set; }
+        public DateTime LastModifiedOn { get; set; }
 
 
     }

@@ -50,6 +50,11 @@ namespace Route.MVCApp.DAL.Persistance.Repositories.Departments
             return _dbContext.Departments.ToList();
         }
 
+        public IQueryable<Department> GetAllAsIQuerable()
+        {
+            return _dbContext.Departments;
+        }
+
         public int Update(Department entity)
         {
             _dbContext.Departments.Update(entity);

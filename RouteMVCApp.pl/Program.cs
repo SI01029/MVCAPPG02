@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Route.MVCApp.DAL.Persistance.Data.Contixts;
+using Route.MVCApp.DAL.Persistance.Repositories.Departments;
 
 namespace RouteMVCApp.pl
 {
@@ -31,7 +32,7 @@ namespace RouteMVCApp.pl
                     optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
                 }
                 );
-                
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             #endregion
 
             var app = builder.Build();
