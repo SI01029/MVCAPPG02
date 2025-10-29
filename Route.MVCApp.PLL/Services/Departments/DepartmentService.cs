@@ -54,7 +54,7 @@ namespace Route.MVCApp.BLL.Services.Departments
                     Id = department.Id,
                     Code = department.Code,
                     Name = department.Name,
-                    CreationDate = department.CreationDate,
+                    CreationDate = department.CreationDate
                 }).AsNoTracking().ToList();
             return departments;
         }
