@@ -46,7 +46,7 @@ namespace Route.MVCApp.BLL.Services.Departments
 
         public IEnumerable<DepartmentToReturnDto> GetAllDepartments()
         {
-            var departments = _departmentRepository.GetAllAsIQuerable().Select(department => new DepartmentToReturnDto()
+            var departmentss = _departmentRepository.GetAllAsIQuerable().Select(department => new DepartmentToReturnDto()
             //Mapping -->[Department --> DepartmentToReturnDto]
             
                
@@ -55,8 +55,8 @@ namespace Route.MVCApp.BLL.Services.Departments
                     Code = department.Code,
                     Name = department.Name,
                     CreationDate = department.CreationDate
-                }).AsNoTracking().ToList();
-            return departments;
+                }).ToList();
+            return departmentss;
         }
 
         public DepartmentDetailsDto? GetDepartmentById(int Id)

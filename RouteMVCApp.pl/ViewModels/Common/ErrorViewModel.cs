@@ -1,4 +1,4 @@
-namespace RouteMVCApp.pl.ViewModels
+namespace RouteMVCApp.pl.ViewModels.Common
 {
     public class ErrorViewModel
     {
