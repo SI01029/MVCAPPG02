@@ -66,6 +66,17 @@ namespace RouteMVCApp.pl.Controllers
 
             
         }
+        [HttpGet] //GET: /Department/Details
+       
+        public IActionResult Details(int? id)
+        {
+            if (!id.HasValue)
+                return BadRequest();
+            var department = _departmentService.GetDepartmentById(id.Value);
+            if (department is null)
+                return NotFound(); //404
+            return View(department);
+        }
 
     }   
 }
