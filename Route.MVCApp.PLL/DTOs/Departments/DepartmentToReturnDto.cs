@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Route.MVCApp.BLL.DTOs
+namespace Route.MVCApp.BLL.DTOs.Departments
 {
     public class DepartmentToReturnDto
     {
