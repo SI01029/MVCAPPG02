@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Route.MVCApp.DAL.Models.Dpartments;
+using Route.MVCApp.DAL.Models.Employees;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,5 +25,8 @@ namespace Route.MVCApp.DAL.Persistance.Data.Contixts
         }
 
         public DbSet<Department> Departments { get; set; }
+
+
+        public DbSet<Employee> Employees { get;set; }
     }
 }
