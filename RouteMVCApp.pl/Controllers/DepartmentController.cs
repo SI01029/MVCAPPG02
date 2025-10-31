@@ -8,17 +8,21 @@ namespace RouteMVCApp.pl.Controllers
 {
     public class DepartmentController : Controller
     {
+        #region Services
         private readonly IDepartmentservice _departmentService;
         private readonly ILogger<DepartmentController> _logger;
         private readonly IWebHostEnvironment _enviroment;
 
-        public DepartmentController(IDepartmentservice departmentService,ILogger<DepartmentController> logger,IWebHostEnvironment enviroment)
+        public DepartmentController(IDepartmentservice departmentService, ILogger<DepartmentController> logger, IWebHostEnvironment enviroment)
         {
             _departmentService = departmentService;
-          
+
             _logger = logger;
             _enviroment = enviroment;
         }
+        #endregion
+
+        #region Index
         [HttpGet] //Get : /Department?Index
         public IActionResult Index()
         {
@@ -26,6 +30,9 @@ namespace RouteMVCApp.pl.Controllers
             return View(departments);
 
         }
+        #endregion
+
+        #region Create
         [HttpGet] // GET: /Department/Create
         public IActionResult Create()
         {
@@ -36,7 +43,7 @@ namespace RouteMVCApp.pl.Controllers
         public IActionResult Create(CreatedDepartmentDto departmentDto)
         {
             if (!ModelState.IsValid)
-            
+
                 return View(departmentDto);
 
             var message = string.Empty;
@@ -50,7 +57,7 @@ namespace RouteMVCApp.pl.Controllers
                     message = "Department is not Created";
                     ModelState.AddModelError(string.Empty, message);
                     return View(departmentDto);
-                } 
+                }
             }
 
             catch (Exception ex)
@@ -70,14 +77,18 @@ namespace RouteMVCApp.pl.Controllers
                     message = "Department is not Created";
                     return View("Error", message);
                 }
-               
+
             }
-          
 
 
         }
+        #endregion
+
+
+        #region Details
+
         [HttpGet] //GET: /Department/Details
-       
+
         public IActionResult Details(int? id)
         {
             if (!id.HasValue)
@@ -87,6 +98,10 @@ namespace RouteMVCApp.pl.Controllers
                 return NotFound(); //404
             return View(department);
         }
+        #endregion
+
+        #region Edit
+
         [HttpGet] // GET: /Department/Edit
         public IActionResult Edit(int? id)
         {
@@ -110,7 +125,7 @@ namespace RouteMVCApp.pl.Controllers
 
         [HttpPost] //POST
 
-        public IActionResult Edit([FromRoute]int id,DepartmentEditViewModel departmentVM)
+        public IActionResult Edit([FromRoute] int id, DepartmentEditViewModel departmentVM)
         {
             if (!ModelState.IsValid)
                 return View(departmentVM);
@@ -121,7 +136,7 @@ namespace RouteMVCApp.pl.Controllers
             {
                 var updatedDepartmentDto = new UpdatedDepartmentDto()
                 {
-                    Id= id,
+                    Id = id,
                     Code = departmentVM.Code,
                     Name = departmentVM.Name,
                     Description = departmentVM.Description,
@@ -163,10 +178,58 @@ namespace RouteMVCApp.pl.Controllers
 
 
         }
+        #endregion
 
-        
+        #region Delete
 
-        
+        //[HttpGet] //Get: /Department/Delete/id
+
+        //public IActionResult Delete (int? id)
+        //{
+        //    if (!id.HasValue)
+        //        return BadRequest(); //400
+        //    var department = _departmentService.GetDepartmentById(id.Value);
+
+        //    if (department is null)
+        //        return NotFound();
+
+        //    return View(department);
+
+        //}
+
+        [HttpPost] //POST: /Department/Delete/id
+
+        public IActionResult Delete([FromRoute] int id)
+        {
+            var message = string.Empty;
+
+            try
+            {
+                var deleted = _departmentService.DeleteDepartment(id);
+
+                if (deleted)
+                    return RedirectToAction(nameof(Index));
+
+                message = "An Error Has Been Occured During Updating The Department: (";
+            }
+            catch (Exception ex)
+            {
+
+                // 1. Log Exception
+
+                _logger.LogError(ex, ex.Message);
+                // 2. Set Message
+
+                message = _enviroment.IsDevelopment() ? ex.Message : "An Error Has Been Occured During" +
+                   " Deleting The Department: (";
+            }
+            return RedirectToAction(nameof(Delete), new { id });
+        } 
+        #endregion
+
+
+
+
 
     }   
 }
