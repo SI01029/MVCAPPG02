@@ -32,16 +32,13 @@ namespace Route.MVCApp.DAL.Persistance.Repositories._Generic
             return _dbContext.SaveChanges();
         }
 
-        public T? Get(int id)
+
+        public T? Get( int id)
         {
-            //var department = _dbContext.Set<T>().Local.FirstOrDefault(D => D.Id==id);
-            //if (department is null)
-            //{
-            //    department = _dbContext.Set<T>().FirstOrDefault(D => D.Id == id);
-            //}
-            //return department;
             return _dbContext.Set<T>().Find(id);
         }
+
+      
 
         public IEnumerable<T> GetAll(bool withAsNoTracking = true)
         {

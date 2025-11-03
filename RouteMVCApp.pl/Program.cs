@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Route.MVCApp.BLL.Services.Departments;
+using Route.MVCApp.BLL.Services.Employees;
 using Route.MVCApp.DAL.Models.Employees;
 using Route.MVCApp.DAL.Persistance.Data.Contixts;
 using Route.MVCApp.DAL.Persistance.Repositories.Departments;
@@ -40,6 +41,8 @@ namespace RouteMVCApp.pl
             builder.Services.AddScoped<IDepartmentservice, DepartmentService>();
 
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             #endregion
 
             var app = builder.Build();

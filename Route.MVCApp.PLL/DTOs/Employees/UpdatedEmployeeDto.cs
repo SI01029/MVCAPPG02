@@ -42,4 +42,5 @@ namespace Route.MVCApp.BLL.DTOs.Employees
         {
             get; set;
         }
+    }
 }
