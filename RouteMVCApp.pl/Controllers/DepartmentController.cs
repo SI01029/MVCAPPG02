@@ -146,7 +146,7 @@ namespace RouteMVCApp.pl.Controllers
 
                 };
 
-                var Updated = _departmentService.UpdateDepartment(updatedDepartmentDto) < 0;
+                var Updated = _departmentService.UpdateDepartment(updatedDepartmentDto) > 0;
 
                 if (Updated)
                     return RedirectToAction(nameof(Index));

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Route.MVCApp.BLL.DTOs.Employees;
 using Route.MVCApp.BLL.Services.Employees;
+using Route.MVCApp.DAL.Models.Employees;
 
 
 namespace RouteMVCApp.pl.Controllers
@@ -106,82 +107,80 @@ namespace RouteMVCApp.pl.Controllers
 
         #region Edit
 
-        //[HttpGet] // GET: /Employee/Edit
-        //public IActionResult Edit(int? id)
-        //{
-        //    if (!id.HasValue)
-        //        return BadRequest(); //400
+        [HttpGet] // GET: /Employee/Edit
+        public IActionResult Edit(int? id)
+        {
+            if (!id.HasValue)
+                return BadRequest(); //400
 
-        //    var employee = _employeeService.GetEmployeeById(id.Value);
+            var employee = _employeeService.GetEmployeeById(id.Value);
 
-        //    if (employee is null)
-        //        return NotFound();//404
+            if (employee is null)
+                return NotFound();//404
 
-        //    return View(new EmployeeEditViewModel()
-        //    {
-        //        Id = employee.Id,
-        //        Code = employee.Code,
-        //        Name = employee.Name,
-        //        Description = employee.Description,
-        //        CreationDate = employee.CreationDate
-        //    });
-        //}
+            return View(new UpdatedEmployeeDto
+            {
 
-        //[HttpPost] //POST
+                Name = employee.Name,
+                Address = employee.Address,
+                Email = employee.Email,
+                Age = employee.Age,
+                Salary = employee.Salary,
+                PhoneNumber = employee.PhoneNumber,
+                IsActive = employee.IsActive,
+                EmployeeType = employee.EmployeeType,
+                Gender = employee.Gender,
+                HiringDate = employee.HiringDate,
 
-        //public IActionResult Edit([FromRoute] int id, EmployeeEditViewModel employeeDto)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View(employeeDto);
+            });
+        }
 
+        [HttpPost] //POST
 
-        //    var message = String.Empty;
-        //    try
-        //    {
-        //        var updatedEmployee = new UpdatedEmployeeDto()
-        //        {
-        //            Id = id,
-        //            Code = employeeDto.Code,
-        //            Name = employeeDto.Name,
-        //            Description = employeeDto.Description,
-        //            CreationDate = employeeDto.CreationDate
+        public IActionResult Edit([FromRoute] int id, UpdatedEmployeeDto employeeDto)
+        {
+            if (!ModelState.IsValid)
+                return View(employeeDto);
 
 
-        //        };
+            var message = String.Empty;
+            try
+            {
+            
 
-        //        var Updated = _employeeService.UpdateEmployee(updatedEmployee) < 0;
+                var Updated = _employeeService.UpdateEmployee(employeeDto) > 0;
 
-        //        if (Updated)
-        //            return RedirectToAction(nameof(Index));
-        //        message = "An Error Has Been Occured During Updating The Employee :(";
-        //    }
-        //    catch (Exception ex)
-        //    {  // 1. Log Exception
+                if (Updated)
+                    return RedirectToAction(nameof(Index));
+                message = "An Error Has Been Occured During Updating The Employee :(";
+            }
+            catch (Exception ex)
+            {  // 1. Log Exception
 
-        //        _logger.LogError(ex, ex.Message);
-        //        // 2. Set Message
+                _logger.LogError(ex, ex.Message);
+                // 2. Set Message
 
-        //        // message = _enviroment.IsDevelopment() ? ex.Message : "An Error Has Been Occured During" +
-        //        //    " Updating The Employee: (";
-        //        if (_enviroment.IsDevelopment())
-        //        {
-        //            message = ex.Message;
-
-
-        //        }
-        //        else
-        //        {
-        //            message = "An Error Has Been Occured During Updating The Employee: (";
-
-        //        }
-
-        //    }
-
-        //    ModelState.AddModelError(string.Empty, message);
-        //    return View(employeeDto);
+                // message = _enviroment.IsDevelopment() ? ex.Message : "An Error Has Been Occured During" +
+                //    " Updating The Employee: (";
+                if (_enviroment.IsDevelopment())
+                {
+                    message = ex.Message;
 
 
-        //}
+                }
+                else
+                {
+                    message = "An Error Has Been Occured During Updating The Employee: (";
+
+                }
+
+            }
+
+            ModelState.AddModelError(string.Empty, message);
+            return View(employeeDto);
+
+
+        }
         #endregion
 
         #region Delete
