@@ -65,19 +65,24 @@ namespace RouteMVCApp.pl.Controllers
 
                 _logger.LogError(ex, ex.Message);
                 // 2. Set Message
-                if (_enviroment.IsDevelopment())
-                {
-                    message = ex.Message;
-                    return View(employeeDto);
+                //if (_enviroment.IsDevelopment())
+                //{
+                //    message = ex.Message;
+                //    return View(employeeDto);
 
-                }
-                else
-                {
-                    message = "Employee is not Created";
-                    return View("Error", message);
-                }
+                //}
+                //else
+                //{
+                //    message = "Employee is not Created";
+                //    return View("Error", message);
+                //}
+                message = _enviroment.IsDevelopment() ? ex.Message : "An Error Has Been Occured During " +
+                    "Updating The Employee :( ";
 
             }
+            ModelState.AddModelError(string.Empty, message);
+
+            return View(employeeDto);
 
 
         }
