@@ -21,7 +21,7 @@ namespace Route.MVCApp.BLL.Services.Employees
         }
         public IEnumerable<EmployeeDto> GetAllEmployees()
         {
-            var employees = _employeeRepository.GetAllAsIQuerable().Select(employee => new EmployeeDto()
+            var employees = _employeeRepository.GetAllAsIQuerable().Where(E => !E .IsDeleted).Select(employee => new EmployeeDto()
             {
                 Id =employee.Id,
                 Name =employee.Name,
