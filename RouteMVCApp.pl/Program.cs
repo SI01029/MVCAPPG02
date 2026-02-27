@@ -1,3 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using Route.MVCApp.BLL.Services.Departments;
+using Route.MVCApp.BLL.Services.Employees;
+using Route.MVCApp.DAL.Models.Employees;
+using Route.MVCApp.DAL.Persistance.Data.Contixts;
+using Route.MVCApp.DAL.Persistance.Repositories.Departments;
+using Route.MVCApp.DAL.Persistance.Repositories.Employees;
+
 namespace RouteMVCApp.pl
 {
     public class Program
@@ -11,7 +19,30 @@ namespace RouteMVCApp.pl
             
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            //builder.Services.AddScoped<ApplicationDbContext>();
+            //builder.Services.AddScoped<DbContextOptions<ApplicationDbContext>>((ServiceProvider)=>
+            //{
+            //    var optionsBuildr = new DbContextOptionsBuilder<ApplicationDbContext>();
+            //    optionsBuildr.UseSqlServer("Server =.;Database =MVCAPPG02; Trusted_Connection=true;TrustSeverCertificate =true");
+            //    var options = optionsBuildr.Options;
+            //    return options;
+            //});
+            builder.Services.AddDbContext<ApplicationDbContext>(
+                //contextLifetime: ServiceLifetime.Scoped,
+                //optionsLifetime: ServiceLifetime.Scoped  //Default Value
+                optionsAction: (optionBuilder) =>
+                {
+                   // optionBuilder.UseSqlServer(builder.Configuration.GetSection("ConnectionString")["DefaultConnection"]);
+                    optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                }
+                );
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
+            builder.Services.AddScoped<IDepartmentservice, DepartmentService>();
+
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             #endregion
 
             var app = builder.Build();

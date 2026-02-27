@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Route.MVCApp.DAL.Models.Dpartments;
+using Route.MVCApp.DAL.Models.Employees;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,20 +14,19 @@ namespace Route.MVCApp.DAL.Persistance.Data.Contixts
 
     {
 
-        public ApplicationDbContext():base()
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
         {
             
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server =.;Database =MVCAPPG02; Trusted_Connection=true;TrustSeverCertificate =true");
-              
-        }
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());//Apply All Configuration classes
         }
 
         public DbSet<Department> Departments { get; set; }
+
+
+        public DbSet<Employee> Employees { get;set; }
     }
 }
